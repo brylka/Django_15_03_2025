@@ -12,3 +12,11 @@ def hello_name(request, name):
     return render(request,
                   'myapp/hello_name.html',
                   {'name': name, 'klucz': 'wartość'})
+
+
+def add(request, a, b):
+    result = a + b
+    #return HttpResponse(f"{a} + {b} = {result}")
+    return render(request,
+                  'myapp/add.html',
+                  {'a': a, 'b': b, 'c': result})
