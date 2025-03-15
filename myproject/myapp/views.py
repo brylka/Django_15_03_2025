@@ -29,3 +29,16 @@ def divide(request, a, b):
     return render(request,
                   'myapp/divide.html',
                   {'a': a, 'b': b, 'c': c})
+
+
+def table(request):
+    posts = [
+        {"id": 1, "title": "Pierwszy post", "content": "Treść pierwszego posta", "create_at": "2025-03-01"},
+        {"id": 2, "title": "Drugi post", "content": "Treść drugiego posta", "create_at": "2025-03-05"},
+        {"id": 3, "title": "Trzeci post", "content": "Treść trzeciego posta", "create_at": "2025-03-15"},
+    ]
+
+    for post in posts:
+        print(f"Lp. {post['id']}, Tytuł: {post['title']}, Treść: {post['content']}, Data {post['create_at']}")
+
+    return render(request, 'myapp/table.html')
