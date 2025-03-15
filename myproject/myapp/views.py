@@ -44,3 +44,9 @@ def table(request):
     #     print(f"Lp. {post['id']}, Tytuł: {post['title']}, Treść: {post['content']}, Data {post['create_at']}")
 
     return render(request, 'myapp/table.html', {'posts': posts})
+
+
+from .models import Post
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, 'myapp/table.html', {'posts': posts})
