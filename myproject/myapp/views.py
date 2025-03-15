@@ -36,9 +36,11 @@ def table(request):
         {"id": 1, "title": "Pierwszy post", "content": "Treść pierwszego posta", "create_at": "2025-03-01"},
         {"id": 2, "title": "Drugi post", "content": "Treść drugiego posta", "create_at": "2025-03-05"},
         {"id": 3, "title": "Trzeci post", "content": "Treść trzeciego posta", "create_at": "2025-03-15"},
+        {"id": 4, "title": "Czwarty post", "content": "Treść czwartego posta", "create_at": "2025-03-15"},
     ]
+    #posts = []
 
-    for post in posts:
-        print(f"Lp. {post['id']}, Tytuł: {post['title']}, Treść: {post['content']}, Data {post['create_at']}")
+    # for post in posts:
+    #     print(f"Lp. {post['id']}, Tytuł: {post['title']}, Treść: {post['content']}, Data {post['create_at']}")
 
-    return render(request, 'myapp/table.html')
+    return render(request, 'myapp/table.html', {'posts': posts})

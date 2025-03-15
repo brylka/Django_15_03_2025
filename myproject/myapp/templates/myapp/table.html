@@ -3,17 +3,22 @@
 {% block title %}Tabelki{% endblock %}
 
 {% block content %}
+{% if posts %}
     <table border="1">
         <tr>
             <th>Lp
             <th>Tutuł
             <th>Treść
             <th>Data utworzenia
+        {% for post in posts %}
         <tr>
-            <td>
-            <td>
-            <td>
-            <td>
-
+            <td>{{ post.id }}
+            <td>{{ post.title }}
+            <td>{{ post.content }}
+            <td>{{ post.create_at }}
+        {% endfor %}
     </table>
+{% else %}
+    <h4>Brak danych</h4>
+{% endif %}
 {% endblock %}
