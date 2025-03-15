@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def hello_world(request):
@@ -50,3 +50,16 @@ from .models import Post
 def post_list(request):
     posts = Post.objects.all()
     return render(request, 'myapp/table.html', {'posts': posts})
+
+
+def create_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        if title and content:
+            Post.objects.create(title=title, content=content)
+            return redirect("post_list")
+        else:
+            return HttpResponse("Tytuł i treść są wymagane!")
+
+    return render(request, 'myapp/create_post.html')

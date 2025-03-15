@@ -18,6 +18,7 @@
             <td>{{ post.create_at }}
         {% endfor %}
     </table>
+    <a href="{% url 'create_post' %}">Dodaj post</a>
 {% else %}
     <h4>Brak danych</h4>
 {% endif %}

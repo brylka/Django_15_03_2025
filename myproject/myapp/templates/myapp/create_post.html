@@ -1,0 +1,13 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Dodawanie posta{% endblock %}
+
+{% block content %}
+<h2>Dodaj nowy post</h2>
+<form method="POST">
+    {% csrf_token %}
+    Tytuł: <input type="text" name="title" required><br>
+    Treść: <textarea name="content" required></textarea><br>
+    <input type="submit" value="Dodaj post">
+</form>
+{% endblock %}
