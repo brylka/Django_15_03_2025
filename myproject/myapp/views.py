@@ -20,3 +20,12 @@ def add(request, a, b):
     return render(request,
                   'myapp/add.html',
                   {'a': a, 'b': b, 'c': result})
+
+def divide(request, a, b):
+    if b != 0:
+        c = a / b
+    else:
+        c = None
+    return render(request,
+                  'myapp/divide.html',
+                  {'a': a, 'b': b, 'c': c})
