@@ -10,12 +10,14 @@
             <th>Tutuł
             <th>Treść
             <th>Data utworzenia
+            <th>Akcja
         {% for post in posts %}
         <tr>
             <td>{{ post.id }}
             <td>{{ post.title }}
             <td>{{ post.content }}
             <td>{{ post.create_at }}
+            <td><a href="{% url 'update_post' post.id %}">Edytuj</a>
         {% endfor %}
     </table>
     <a href="{% url 'create_post' %}">Dodaj post</a>

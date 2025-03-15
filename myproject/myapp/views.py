@@ -63,3 +63,7 @@ def create_post(request):
             return HttpResponse("Tytuł i treść są wymagane!")
 
     return render(request, 'myapp/create_post.html')
+
+
+def update_post(request, post_id):
+    pass
