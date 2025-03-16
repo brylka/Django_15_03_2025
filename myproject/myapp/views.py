@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import LinearEquationForm, PostForm
@@ -104,12 +104,14 @@ def update_post(request, post_id):
 
 
 def delete_post(request, post_id):
+    print("ala")
     post = get_object_or_404(Post, id=post_id)
-    if request.method == 'POST' and request.POST.get('_method') == 'DELETE':
-        post.delete()
-        return redirect("post_list")
 
-    return render(request, 'myapp/delete_post.html', {"post": post})
+    if request.method == "DELETE":
+        post.delete()
+        return JsonResponse({"message": "Post usunięty"}, status=204)
+
+    return JsonResponse({"error": "Metoda niedozwolona"}, status=405)
 
 
 def zero_point(request):
