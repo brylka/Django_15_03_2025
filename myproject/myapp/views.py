@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import LinearEquationForm
+from .forms import LinearEquationForm, PostForm
 
 
 def hello_world(request):
@@ -59,16 +59,22 @@ def post_list(request):
 
 
 def create_post(request):
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        if title and content:
-            Post.objects.create(title=title, content=content)
+    form = PostForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+            form.save()
             return redirect("post_list")
-        else:
-            return HttpResponse("Tytuł i treść są wymagane!")
 
-    return render(request, 'myapp/create_post.html')
+    return render(request, "myapp/post_form.html", {"form": form, "title": "Dodaj post"})
+    # if request.method == 'POST':
+    #     title = request.POST.get('title')
+    #     content = request.POST.get('content')
+    #     if title and content:
+    #         Post.objects.create(title=title, content=content)
+    #         return redirect("post_list")
+    #     else:
+    #         return HttpResponse("Tytuł i treść są wymagane!")
+    #
+    # return render(request, 'myapp/create_post.html')
 
 
 def update_post(request, post_id):
