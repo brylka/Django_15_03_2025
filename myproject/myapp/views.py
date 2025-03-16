@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
+from .forms import LinearEquationForm
+
 
 def hello_world(request):
     #return HttpResponse("Hello, World!")
@@ -48,7 +50,11 @@ def table(request):
 
 from .models import Post
 def post_list(request):
-    posts = Post.objects.all()
+    # if request.GET.get('sort'):
+    sort = request.GET.get('sort', 'id')
+    # else:
+    #     sort = 'id'
+    posts = Post.objects.all().order_by(sort)
     return render(request, 'myapp/table.html', {'posts': posts})
 
 
@@ -88,3 +94,20 @@ def delete_post(request, post_id):
         return redirect("post_list")
 
     return render(request, 'myapp/delete_post.html', {"post": post})
+
+
+def zero_point(request):
+    x0 = None
+    if request.method == 'POST':
+        form = LinearEquationForm(request.POST)
+        if form.is_valid():
+            a = form.cleaned_data['a']
+            b = form.cleaned_data['b']
+
+            if a != 0:
+                x0 = -b / a
+            else:
+                x0 = 'Brak miejsc zerowych.'
+    else:
+        form = LinearEquationForm()
+    return render(request, "myapp/zero_point.html", {"form": form, "x0": x0})
