@@ -12,7 +12,7 @@
             <th><a href="?sort=create_at">Data utworzenia</a>
             <th colspan="2">Akcja
         {% for post in posts %}
-        <tr>
+        <tr id="post-{{ post.id }}">
             <td>{{ post.id }}
             <td>{{ post.title }}
             <td>{{ post.content }}
