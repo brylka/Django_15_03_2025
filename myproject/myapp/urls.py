@@ -7,12 +7,12 @@ urlpatterns = [
     path('hello/<str:name>/', hello_name),
     path('add/<int:a>/<int:b>/', add),
     path('divide/<int:a>/<int:b>/', divide),
-    path('table/', table),
+    path('table/', table, name='table'),
 
     path('posts/', post_list, name='post_list'),
     path('posts/create/', create_post, name='create_post'),
     path('posts/update/<int:post_id>', update_post, name='update_post'),
     path('posts/delete/<int:post_id>', delete_post, name='delete_post'),
 
-    path('zero-point/', zero_point),
+    path('zero-point/', zero_point, name='zero_point'),
 ]
