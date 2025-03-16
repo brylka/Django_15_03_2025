@@ -79,18 +79,28 @@ def create_post(request):
 
 def update_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    form = PostForm(request.POST or None, instance=post)
 
-    if request.method == 'POST':
-        if request.POST.get('_method') == "PUT":
-            if request.POST.get('title') and request.POST.get('content'):
-                post.title = request.POST.get('title')
-                post.content = request.POST.get('content')
-                post.save()
-                return redirect("post_list")
-            else:
-                return HttpResponse("Tytuł i treść są wymagane!")
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("post_list")
 
-    return render(request, 'myapp/update_post.html', {"post": post})
+    return render(request, "myapp/post_form.html",
+                  {"form": form, "title": "Edytuj post"})
+
+    # post = get_object_or_404(Post, id=post_id)
+    #
+    # if request.method == 'POST':
+    #     if request.POST.get('_method') == "PUT":
+    #         if request.POST.get('title') and request.POST.get('content'):
+    #             post.title = request.POST.get('title')
+    #             post.content = request.POST.get('content')
+    #             post.save()
+    #             return redirect("post_list")
+    #         else:
+    #             return HttpResponse("Tytuł i treść są wymagane!")
+    #
+    # return render(request, 'myapp/update_post.html', {"post": post})
 
 
 def delete_post(request, post_id):
