@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 def hello_world(request):
@@ -66,4 +66,16 @@ def create_post(request):
 
 
 def update_post(request, post_id):
-    pass
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        if request.POST.get('_method') == "PUT":
+            if request.POST.get('title') and request.POST.get('content'):
+                post.title = request.POST.get('title')
+                post.content = request.POST.get('content')
+                post.save()
+                return redirect("post_list")
+            else:
+                return HttpResponse("Tytuł i treść są wymagane!")
+
+    return render(request, 'myapp/update_post.html', {"post": post})
