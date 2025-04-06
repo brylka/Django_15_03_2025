@@ -94,6 +94,25 @@ def zero_point(request):
         form = LinearEquationForm()
     return render(request, "myapp/zero_point.html", {"form": form, "x0": x0})
 
+
+def get_api_key():
+    """Pobiera klucz API z pliku openai_key.txt"""
+    try:
+        with open('../openai_key.txt', 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        print("Błąd: Plik openai_key.txt nie został znaleziony.")
+        return None
+    except Exception as e:
+        print(f"Błąd odczytu pliku z kluczem API: {str(e)}")
+        return None
+
 def chat(request):
+    api_key = get_api_key()
+    error_message = None
+
+    if not api_key:
+        error_message = "Błędna konfiguracja aplikacji. Skontaktuj się z administratorem."
+
     form = ChatForm()
-    return render(request, "myapp/chat.html", {"form": form})
+    return render(request, "myapp/chat.html", {"form": form, "error_message": error_message})

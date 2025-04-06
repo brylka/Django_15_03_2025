@@ -5,6 +5,12 @@
 {% block content %}
 <h1>ChatGPT</h1>
 
+{% if error_message %}
+<div class="alert alert-danger">
+{{ error_message }}
+</div>
+{% endif %}
+
 <form method="POST">
     {% csrf_token %}
     {{ form.prompt }}
