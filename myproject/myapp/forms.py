@@ -20,3 +20,4 @@ class PostForm(forms.ModelForm):
 
 class ChatForm(forms.Form):
     prompt = forms.CharField(label="Prompt")
+    conversation_history = forms.CharField(required=False, widget=forms.HiddenInput())

@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from openai import OpenAI
@@ -122,16 +124,29 @@ def chat(request):
     form = ChatForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid() and api_key:
-        user_prompt = form.cleaned_data["prompt"]
 
-        client = OpenAI(api_key=api_key)
-        messages.append({"role": "user", "content": user_prompt})
-        response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0.7
-        )
-        assistant_response = response.choices[0].message.content
+        try:
+            user_prompt = form.cleaned_data["prompt"]
+            history_json = form.cleaned_data.get("conversation_history") or "[]"
+            messages = json.loads(history_json)
+
+
+            client = OpenAI(api_key=api_key)
+            messages.append({"role": "user", "content": user_prompt})
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.7
+            )
+            assistant_response = response.choices[0].message.content
+            messages.append({"role": "assistant", "content": assistant_response})
+
+            form = ChatForm(initial={"conversation_history": json.dumps(messages)})
+
+        except Exception as e:
+            error_message = f"Wystąpił błąd: {str(e)}"
+
 
     return render(request, "myapp/chat.html",
-                  {"form": form, "error_message": error_message, "assistant_response": assistant_response, "response": response})
+                  {"form": form, "error_message": error_message,
+                   "assistant_response": assistant_response, "response": response, "messages": messages})
