@@ -17,4 +17,17 @@
     <button type="submit">Wyślij</button>
 </form>
 
+{% if assistant_response %}
+    <div class="alert alert-success">
+        <p>Chat odpowiedział:</p>
+        <p>{{ assistant_response }}</p>
+    </div>
+{% endif %}
+{% if response %}
+    <div class="alert alert-info">
+        <p>Dane debug:</p>
+        <p>{{ response }}</p>
+    </div>
+{% endif %}
+
 {% endblock %}

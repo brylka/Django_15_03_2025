@@ -133,4 +133,4 @@ def chat(request):
         assistant_response = response.choices[0].message.content
 
     return render(request, "myapp/chat.html",
-                  {"form": form, "error_message": error_message, "assistant_response": assistant_response})
+                  {"form": form, "error_message": error_message, "assistant_response": assistant_response, "response": response})
