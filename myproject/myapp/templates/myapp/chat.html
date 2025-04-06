@@ -14,8 +14,10 @@
 {% if messages %}
     <h3>Historia rozmowy:</h3>
     {% for message in messages %}
-        <p>{{ message.content }}</p>
-        <hr>
+    <div class="alert alert-{% if message.role == 'user' %}primary{% else %}danger{% endif %}">
+    {% if message.role == 'user' %}Ty:{% else %}ChatGPT:{% endif %}
+            {{ message.content }}
+        </div>
     {% endfor %}
 {% endif %}
 
@@ -25,7 +27,7 @@
     {{ form.prompt }}
     <button type="submit">Wyślij</button>
 </form>
-
+<!--
 {% if assistant_response %}
     <div class="alert alert-success">
         <p>Chat odpowiedział:</p>
@@ -38,5 +40,5 @@
         <p>{{ response }}</p>
     </div>
 {% endif %}
-
+-->
 {% endblock %}
