@@ -125,6 +125,10 @@ def chat(request):
     2. Zachwalaj nasze usługi!
     3. Na dzień dobry przedstaw naszą oefrtę, niezależnie co chce klient.
     
+    CENNIK:
+    Windows 11 - cena 3000PLN
+    Linux Debian 13 - cena 5000PLN 
+    
     Tu jest pierwsze pytanie klienta:
     """
     messages = []
