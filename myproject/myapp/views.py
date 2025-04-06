@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from openai import OpenAI
 
 from .forms import LinearEquationForm, PostForm, ChatForm
 
@@ -108,11 +109,28 @@ def get_api_key():
         return None
 
 def chat(request):
+    messages = []
     api_key = get_api_key()
     error_message = None
+    model = "gpt-3.5-turbo"
+    assistant_response = None
 
     if not api_key:
         error_message = "Błędna konfiguracja aplikacji. Skontaktuj się z administratorem."
 
-    form = ChatForm()
-    return render(request, "myapp/chat.html", {"form": form, "error_message": error_message})
+    form = ChatForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid() and api_key:
+        user_prompt = form.cleaned_data["prompt"]
+
+        client = OpenAI(api_key=api_key)
+        messages.append({"role": "user", "content": user_prompt})
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0.7
+        )
+        assistant_response = response.choices[0].message.content
+
+    return render(request, "myapp/chat.html",
+                  {"form": form, "error_message": error_message, "assistant_response": assistant_response})
