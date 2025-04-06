@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import hello_world, hello_name, add, divide, table, post_list, create_post, update_post, delete_post, \
-    zero_point
+    zero_point, chat
 
 urlpatterns = [
     path('hello/', hello_world),
@@ -15,4 +15,6 @@ urlpatterns = [
     path('posts/delete/<int:post_id>', delete_post, name='delete_post'),
 
     path('zero-point/', zero_point, name='zero_point'),
+
+    path('chat/', chat, name='chat'),
 ]

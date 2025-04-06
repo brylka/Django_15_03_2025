@@ -1,0 +1,14 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+<h1>ChatGPT</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.prompt }}
+    <button type="submit">Wyślij</button>
+</form>
+
+{% endblock %}

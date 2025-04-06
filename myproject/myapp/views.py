@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import LinearEquationForm, PostForm
+from .forms import LinearEquationForm, PostForm, ChatForm
 
 
 def hello_world(request):
@@ -93,3 +93,7 @@ def zero_point(request):
     else:
         form = LinearEquationForm()
     return render(request, "myapp/zero_point.html", {"form": form, "x0": x0})
+
+def chat(request):
+    form = ChatForm()
+    return render(request, "myapp/chat.html", {"form": form})

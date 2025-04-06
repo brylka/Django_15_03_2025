@@ -17,3 +17,6 @@ class PostForm(forms.ModelForm):
             "title": forms.TextInput(attrs={"class": "form-control", "placeholder": "Podaj tytuł"}),
             "content": forms.Textarea(attrs={"class": "form-control", "placeholder": "Podaj treść posta", "rows": 5}),
         }
+
+class ChatForm(forms.Form):
+    prompt = forms.CharField(label="Prompt")

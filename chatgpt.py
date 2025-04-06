@@ -22,6 +22,9 @@ def main():
     # Inicjalizacja klienta OpenAI
     client = OpenAI(api_key=api_key)
 
+    # Historia wiadomości
+    messages = []
+
     # Informacje o skrypcie
     print("=" * 50)
     print("ChatGPT Hello World - Prosty interfejs do API OpenAI")
@@ -43,20 +46,31 @@ def main():
             print("Do widzenia!")
             break
 
+        # Dodaj wiadomość do historii
+        messages.append({"role": "user", "content": user_prompt})
+
         try:
             # Wysyłanie żądania do API
             print("\nWysyłanie zapytania do ChatGPT...")
             response = client.chat.completions.create(
                 model=model,
-                messages=[{"role": "user", "content": user_prompt}],
+                messages=messages,
                 temperature=0.7
             )
 
+            # Dodaj odpowiedź do historii
+            assistant_response = response.choices[0].message.content
+            messages.append({"role": "assistant", "content": assistant_response})
+
             # Wyświetlenie odpowiedzi
+            print("\n" + "=" * 50)
+            print("Pełna odpowiedź ChatGPT:\n", response)
+            print("\n" + "=" * 50)
+            print("Zawartość rozmowy:\n", messages)
             print("\n" + "=" * 50)
             print("ODPOWIEDŹ CHATGPT:")
             print("=" * 50)
-            print(response.choices[0].message.content)
+            print(assistant_response)
             print("=" * 50)
 
             # Wyświetlenie statystyk
