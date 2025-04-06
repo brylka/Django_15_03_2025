@@ -114,6 +114,7 @@ def chat(request):
     error_message = None
     model = "gpt-3.5-turbo"
     assistant_response = None
+    response = None
 
     if not api_key:
         error_message = "Błędna konfiguracja aplikacji. Skontaktuj się z administratorem."
