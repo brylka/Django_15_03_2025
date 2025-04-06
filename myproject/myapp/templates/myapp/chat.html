@@ -14,10 +14,12 @@
 {% if messages %}
     <h3>Historia rozmowy:</h3>
     {% for message in messages %}
-    <div class="alert alert-{% if message.role == 'user' %}primary{% else %}danger{% endif %}">
-    {% if message.role == 'user' %}Ty:{% else %}ChatGPT:{% endif %}
-            {{ message.content }}
-        </div>
+        {% if forloop.counter0 > 0 %}
+            <div class="alert alert-{% if message.role == 'user' %}primary{% else %}danger{% endif %}">
+            {% if message.role == 'user' %}Ty:{% else %}ChatGPT:{% endif %}
+                    {{ message.content }}
+            </div>
+        {% endif %}
     {% endfor %}
 {% endif %}
 
